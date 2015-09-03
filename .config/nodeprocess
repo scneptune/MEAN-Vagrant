@@ -1,0 +1,8 @@
+#!monit
+check process nodejs with pidfile "/var/run/nodeapp.pid"
+	start program = "/sbin/start nodeapp"
+	stop program = "/sbin/stop nodeapp"
+	if failed port 8000 protocol HTTP
+		request /
+		with timeout 10 seconds
+		then restart
